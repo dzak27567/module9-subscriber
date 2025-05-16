@@ -19,3 +19,7 @@ String guest:guest@localhost:5672 adalah URI connection string untuk menghubungk
 * localhost: adalah alamat host tempat RabbitMQ dijalankan. Dalam hal ini, RabbitMQ berjalan secara lokal di komputermu.
 
 * 5672: adalah nomor port default yang digunakan oleh protokol AMQP (port ini digunakan oleh RabbitMQ untuk menerima koneksi dari client).
+
+## Gambar
+Gambar tersebut menunjukkan grafik pada bagian atas yang mengalami lonjakan (spike), menggambarkan situasi ketika subscriber lambat dalam memproses pesan. Terlihat bahwa lebih dari 20 pesan sempat menumpuk dalam antrean selama beberapa detik sebelum akhirnya berkurang kembali. Hal ini terjadi karena subscriber membutuhkan waktu sekitar 10 milidetik untuk memproses setiap pesan, sehingga saat publisher mengirim banyak pesan secara bersamaan dalam waktu singkat, antrean sementara terbentuk di RabbitMQ sebelum akhirnya terurai seiring diprosesnya pesan-pesan tersebut.
+![Gambar chart rabit](./rabit.png)
