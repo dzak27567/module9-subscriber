@@ -23,3 +23,11 @@ String guest:guest@localhost:5672 adalah URI connection string untuk menghubungk
 ## Gambar
 Gambar tersebut menunjukkan grafik pada bagian atas yang mengalami lonjakan (spike), menggambarkan situasi ketika subscriber lambat dalam memproses pesan. Terlihat bahwa lebih dari 20 pesan sempat menumpuk dalam antrean selama beberapa detik sebelum akhirnya berkurang kembali. Hal ini terjadi karena subscriber membutuhkan waktu sekitar 10 milidetik untuk memproses setiap pesan, sehingga saat publisher mengirim banyak pesan secara bersamaan dalam waktu singkat, antrean sementara terbentuk di RabbitMQ sebelum akhirnya terurai seiring diprosesnya pesan-pesan tersebut.
 ![Gambar chart rabit](./rabit.png)
+
+Gambar yang memperlihatkan 3 program `subscriber` yang menerima *message* dari `publisher` yang dijalankan beberapa kali.
+![Gambar 3 program subscriber jalan dan menerima message](./multisub.png)
+
+
+Gambar menunjukkan grafik RabbitMQ di mana antrean pesan (queued messages) tidak mengalami lonjakan seperti saat hanya satu subscriber yang berjalan. Ini disebabkan oleh cara kerja RabbitMQ yang mendistribusikan pesan ke salah satu subscriber saja, bukan ke semua sekaligus. Dengan demikian, saat satu subscriber masih sibuk memproses pesan, RabbitMQ dapat langsung mengirim pesan berikutnya ke subscriber lain yang sudah tersedia atau tidak sedang memproses apapun. Pola distribusi ini juga terlihat pada gambar sebelumnya, di mana masing-masing subscriber menerima pesan dalam urutan yang berbeda.
+
+![Gambar chart rabbitmq ketika 3 subscriber jalan](./rabitmulti.png)
